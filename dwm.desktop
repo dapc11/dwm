@@ -1,6 +1,6 @@
 [Desktop Entry]
 Encoding=UTF-8
-Name=Dwm session
+Name=Dwm Session
 Comment=dwm window manager
 Exec=/usr/local/bin/dwm
 Type=Application
