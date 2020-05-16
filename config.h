@@ -19,38 +19,42 @@ static char normfgcolor[]           = "#bbbbbb";
 static char selfgcolor[]            = "#eeeeee";
 static char selbordercolor[]        = "#770000";
 static char selbgcolor[]            = "#005577";
+static char statbgcolor[]           = "#eeeeee";
+static char statbordercolor[]       = "#770000";
+static char statfgcolor[]           = "#005577";
 static char *colors[][3] = {
        /*               fg           bg           border   */
        [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
-       [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
+       [SchemeSel]  = { statfgcolor, statbgcolor, statbordercolor },
 };
 
 typedef struct {
-	const char *name;
-	const void *cmd;
+    const char *name;
+    const void *cmd;
 } Sp;
 const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x34", NULL };
 const char *spcmd2[] = {"st", "-n", "spcalc", "-f", "monospace:size=16", "-g", "50x20", "-e", "bc", "-lq", NULL };
 static Sp scratchpads[] = {
-	/* name          cmd  */
-	{"spterm",      spcmd1},
-	{"spranger",    spcmd2},
+    /* name          cmd  */
+    {"spterm",      spcmd1},
+    {"spranger",    spcmd2},
 };
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
-	/* xprop(1):
-	 *	WM_CLASS(STRING) = instance, class
-	 *	WM_NAME(STRING) = title
-	 */
-	/* class      instance    title       tags mask     isfloating   isterminal noswallow monitor */
-	{ "Gimp",     NULL,       NULL,       1 << 8,       0,           0,         0,        -1 },
-	{ "St",       NULL,       NULL,       0,            0,           1,         0,        -1 },
-	{ NULL,       NULL,       "Event Tester", 0,        0,           0,         1,        -1 },
-	{ NULL,      "spterm",    NULL,       SPTAG(0),     1,           1,         0,        -1 },
-	{ NULL,      "spcalc",      NULL,       SPTAG(1),     1,           1,         0,        -1 },
+    /* xprop(1):
+     *    WM_CLASS(STRING) = instance, class
+     *    WM_NAME(STRING) = title
+     */
+    /* class      instance    title             tags mask     isfloating   isterminal noswallow monitor */
+    { "Gimp",     NULL,       NULL,             1 << 8,       0,           0,         0,        -1 },
+    { "St",       NULL,       NULL,             0,            0,           1,         0,        -1 },
+    { "firefox",  NULL,       NULL,             2,            0,           1,         0,        -1 },
+    { NULL,       NULL,       "Event Tester",   0,            0,           0,         1,        -1 },
+    { NULL,      "spterm",    NULL,             SPTAG(0),     1,           1,         0,        -1 },
+    { NULL,      "spcalc",    NULL,             SPTAG(1),     1,           1,         0,        -1 },
 };
 
 /* layout(s) */
