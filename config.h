@@ -132,7 +132,7 @@ static Key keys[] = {
 	{ MODKEY,			XK_Tab,		view,		{0} },
 	/* { MODKEY|ShiftMask,		XK_Tab,		spawn,		SHCMD("") }, */
 	{ MODKEY,			XK_q,		killclient,	{0} },
-	{ MODKEY,			XK_w,		spawn,		SHCMD("$BROWSER") },
+	{ MODKEY,			XK_w,		spawn,		SHCMD("firefox") },
 	{ MODKEY|ShiftMask,		XK_w,		spawn,		SHCMD("st -e sudo nmtui") },
 	{ MODKEY,			XK_r,		spawn,		SHCMD("st -e ranger") },
 	{ MODKEY|ShiftMask,		XK_r,		spawn,		SHCMD("st -e htop") },
@@ -190,11 +190,10 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_Page_Down,	shifttag,	{ .i = +1 } },
 	{ MODKEY,			XK_Insert,	spawn,		SHCMD("notify-send \"📋 Clipboard contents:\" \"$(xclip -o -selection clipboard)\"") },
 
-	{ MODKEY,			XK_F3,		spawn,		SHCMD("displayselect") },
-	{ MODKEY,			XK_F4,		spawn,		SHCMD("st -e pulsemixer; kill -44 $(pidof dwmblocks)") },
-	{ MODKEY,			XK_F5,		xrdb,		{.v = NULL } },
-	{ MODKEY,			XK_F9,		spawn,		SHCMD("dmenumount") },
-	{ MODKEY,			XK_F10,		spawn,		SHCMD("dmenuumount") },
+
+    { MODKEY,               XK_F1,      spawn,      SHCMD("pulseaudio-ctl mute") },
+    { MODKEY,               XK_F2,      spawn,      SHCMD("pulseaudio-ctl down") },
+    { MODKEY,               XK_F3,      spawn,      SHCMD("pulseaudio-ctl up") },
 	{ MODKEY,			XK_F12,		xrdb,		{.v = NULL } },
 	{ MODKEY,			XK_space,	zoom,		{0} },
 	{ MODKEY|ShiftMask,		XK_space,	togglefloating,	{0} },
@@ -212,6 +211,7 @@ static Key keys[] = {
 	{ 0, XF86XK_TouchpadOn,		spawn,		SHCMD("synclient TouchpadOff=0") },
 	{ 0, XF86XK_MonBrightnessUp,	spawn,		SHCMD("xbacklight -inc 15") },
 	{ 0, XF86XK_MonBrightnessDown,	spawn,		SHCMD("xbacklight -dec 15") },
+	{ 0, XF86XK_PowerOff,	spawn,		SHCMD("sysact") },
 };
 
 /* button definitions */
