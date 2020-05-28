@@ -51,6 +51,7 @@ static const Rule rules[] = {
     /* class      instance    title             tags mask     isfloating   isterminal noswallow monitor */
     { "Gimp",     NULL,       NULL,             1 << 8,       0,           0,         0,        -1 },
     { "St",       NULL,       NULL,             0,            0,           1,         0,        -1 },
+    { "Alacritty",NULL,       NULL,             0,            0,           1,         0,        -1 },
     { "firefox",  NULL,       NULL,             2,            0,           1,         0,        -1 },
     { NULL,       NULL,       "Event Tester",   0,            0,           0,         1,        -1 },
     { NULL,      "spterm",    NULL,             SPTAG(0),     1,           1,         0,        -1 },
@@ -99,7 +100,8 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]  = { "st", NULL };
+/*static const char *termcmd[]  = { "st", NULL };*/
+static const char *termcmd[]  = { "alacritty", NULL };
 
 #include <X11/XF86keysym.h>
 #include "shiftview.c"
@@ -127,9 +129,9 @@ static Key keys[] = {
     { MODKEY,           XK_Tab,         view,           {0} },
     { MODKEY,           XK_q,           killclient,     {0} },
     { MODKEY,           XK_w,           spawn,          SHCMD("firefox") },
-    { MODKEY|ShiftMask, XK_w,           spawn,          SHCMD("st -e sudo nmtui") },
-    { MODKEY,           XK_r,           spawn,          SHCMD("st -e ranger") },
-    { MODKEY|ShiftMask, XK_r,           spawn,          SHCMD("st -e htop") },
+    { MODKEY|ShiftMask, XK_w,           spawn,          SHCMD("alacritty -e sudo nmtui") },
+    { MODKEY,           XK_r,           spawn,          SHCMD("alacritty -e ranger") },
+    { MODKEY|ShiftMask, XK_r,           spawn,          SHCMD("alacritty -e htop") },
     { MODKEY,           XK_t,           setlayout,      {.v = &layouts[0]} },
     { MODKEY|ShiftMask, XK_t,           setlayout,      {.v = &layouts[1]} },
     { MODKEY,           XK_y,           setlayout,      {.v = &layouts[2]} },
@@ -178,9 +180,9 @@ static Key keys[] = {
     { 0, XF86XK_AudioRaiseVolume,       spawn,          SHCMD("pamixer --allow-boost -i 3; kill -44 $(pidof dwmblocks)") },
     { 0, XF86XK_AudioLowerVolume,       spawn,          SHCMD("pamixer --allow-boost -d 3; kill -44 $(pidof dwmblocks)") },
     { 0, XF86XK_WWW,                    spawn,          SHCMD("$BROWSER") },
-    { 0, XF86XK_DOS,                    spawn,          SHCMD("st") },
-    { 0, XF86XK_TaskPane,               spawn,          SHCMD("st -e htop") },
-    { 0, XF86XK_MyComputer,             spawn,          SHCMD("st -e ranger /") },
+    { 0, XF86XK_DOS,                    spawn,          SHCMD("alacritty") },
+    { 0, XF86XK_TaskPane,               spawn,          SHCMD("alacritty -e htop") },
+    { 0, XF86XK_MyComputer,             spawn,          SHCMD("alacritty -e ranger /") },
     { 0, XF86XK_Launch1,                spawn,          SHCMD("xset dpms force off") },
     { 0, XF86XK_TouchpadOff,            spawn,          SHCMD("synclient TouchpadOff=1") },
     { 0, XF86XK_TouchpadOn,             spawn,          SHCMD("synclient TouchpadOff=0") },
