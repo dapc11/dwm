@@ -120,10 +120,6 @@ static Key keys[] = {
     TAGKEYS(            XK_9,        8)
     { MODKEY,           XK_0,           view,           {.ui = ~0 } },
     { MODKEY|ShiftMask, XK_0,           tag,            {.ui = ~0 } },
-    { MODKEY,           XK_minus,       spawn,          SHCMD("pamixer --allow-boost -d 5; kill -44 $(pidof dwmblocks)") },
-    { MODKEY|ShiftMask, XK_minus,       spawn,          SHCMD("pamixer --allow-boost -d 15; kill -44 $(pidof dwmblocks)") },
-    { MODKEY,           XK_equal,       spawn,          SHCMD("pamixer --allow-boost -i 5; kill -44 $(pidof dwmblocks)") },
-    { MODKEY|ShiftMask, XK_equal,       spawn,          SHCMD("pamixer --allow-boost -i 15; kill -44 $(pidof dwmblocks)") },
     { MODKEY,           XK_BackSpace,   spawn,          SHCMD("sysact") },
     { MODKEY|ShiftMask, XK_BackSpace,   spawn,          SHCMD("sysact") },
     { MODKEY,           XK_Tab,         view,           {0} },
@@ -176,18 +172,14 @@ static Key keys[] = {
     { MODKEY,           XK_F12,         xrdb,           {.v = NULL } },
     { MODKEY,           XK_space,       zoom,           {0} },
     { MODKEY|ShiftMask, XK_space,       togglefloating, {0} },
-    { 0, XF86XK_AudioMute,              spawn,          SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
-    { 0, XF86XK_AudioRaiseVolume,       spawn,          SHCMD("pamixer --allow-boost -i 3; kill -44 $(pidof dwmblocks)") },
-    { 0, XF86XK_AudioLowerVolume,       spawn,          SHCMD("pamixer --allow-boost -d 3; kill -44 $(pidof dwmblocks)") },
     { 0, XF86XK_WWW,                    spawn,          SHCMD("$BROWSER") },
     { 0, XF86XK_DOS,                    spawn,          SHCMD("alacritty") },
     { 0, XF86XK_TaskPane,               spawn,          SHCMD("alacritty -e htop") },
     { 0, XF86XK_MyComputer,             spawn,          SHCMD("alacritty -e ranger /") },
-    { 0, XF86XK_Launch1,                spawn,          SHCMD("xset dpms force off") },
-    { 0, XF86XK_TouchpadOff,            spawn,          SHCMD("synclient TouchpadOff=1") },
-    { 0, XF86XK_TouchpadOn,             spawn,          SHCMD("synclient TouchpadOff=0") },
-    { 0, XF86XK_MonBrightnessUp,        spawn,          SHCMD("xbacklight -inc 15") },
-    { 0, XF86XK_MonBrightnessDown,      spawn,          SHCMD("xbacklight -dec 15") },
+    /* { 0, XF86XK_TouchpadOff,            spawn,          SHCMD("synclient TouchpadOff=1") }, */
+    /* { 0, XF86XK_TouchpadOn,             spawn,          SHCMD("synclient TouchpadOff=0") }, */
+    /* { 0, XF86XK_MonBrightnessUp,        spawn,          SHCMD("xbacklight -inc 15") }, */
+    /* { 0, XF86XK_MonBrightnessDown,      spawn,          SHCMD("xbacklight -dec 15") }, */
     { 0, XF86XK_PowerOff,               spawn,          SHCMD("sysact") },
 };
 
@@ -196,12 +188,6 @@ static Key keys[] = {
 static Button buttons[] = {
     /* click                event mask      button          function        argument */
     { ClkWinTitle,          0,              Button2,        zoom,           {0} },
-    { ClkStatusText,        0,              Button1,        sigdwmblocks,   {.i = 1} },
-    { ClkStatusText,        0,              Button2,        sigdwmblocks,   {.i = 2} },
-    { ClkStatusText,        0,              Button3,        sigdwmblocks,   {.i = 3} },
-    { ClkStatusText,        0,              Button4,        sigdwmblocks,   {.i = 4} },
-    { ClkStatusText,        0,              Button5,        sigdwmblocks,   {.i = 5} },
-    { ClkStatusText,        ShiftMask,      Button1,        sigdwmblocks,   {.i = 6} },
     { ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
     { ClkClientWin,         MODKEY,         Button2,        defaultgaps,    {0} },
     { ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
