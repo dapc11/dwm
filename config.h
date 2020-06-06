@@ -177,6 +177,7 @@ static Key keys[] = {
     { 0,                        XF86XK_TaskPane,    spawn,          SHCMD("alacritty -e htop") },
     { 0,                        XF86XK_MyComputer,  spawn,          SHCMD("alacritty -e ranger /") },
     { 0,                        XF86XK_PowerOff,    spawn,          SHCMD("sysact") },
+    { MODKEY,                   XK_n,               spawn,          SHCMD("nightmode") },
     /* { 0, XF86XK_TouchpadOff,            spawn,          SHCMD("synclient TouchpadOff=1") }, */
     /* { 0, XF86XK_TouchpadOn,             spawn,          SHCMD("synclient TouchpadOff=0") }, */
     /* { 0, XF86XK_MonBrightnessUp,        spawn,          SHCMD("xbacklight -inc 15") }, */
