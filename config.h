@@ -90,9 +90,11 @@ static const Layout layouts[] = {
     { MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
     { MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 #define STACKKEYS(MOD,ACTION) \
-    { MOD,    XK_j,    ACTION##stack,    {.i = INC(+1) } }, \
-    { MOD,    XK_k,    ACTION##stack,    {.i = INC(-1) } }, \
-    { MOD, XK_v,     ACTION##stack, {.i = 0 } }, \
+    { MOD, XK_Left,    ACTION##stack,    {.i = INC(+1) } }, \
+    { MOD, XK_Right,   ACTION##stack,    {.i = INC(-1) } }, \
+    { MOD, XK_j,       ACTION##stack,    {.i = INC(+1) } }, \
+    { MOD, XK_k,       ACTION##stack,    {.i = INC(-1) } }, \
+    { MOD, XK_v,       ACTION##stack,    {.i = 0 } }, \
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
@@ -157,10 +159,10 @@ static Key keys[] = {
     { MODKEY,           XK_z,           incrgaps,       {.i = +3 } },
     { MODKEY,           XK_x,           incrgaps,       {.i = -3 } },
     { MODKEY,           XK_b,           togglebar,      {0} },
-    { MODKEY,           XK_Left,        focusmon,       {.i = -1 } },
-    { MODKEY|ShiftMask, XK_Left,        tagmon,         {.i = -1 } },
-    { MODKEY,           XK_Right,       focusmon,       {.i = +1 } },
-    { MODKEY|ShiftMask, XK_Right,       tagmon,         {.i = +1 } },
+    /* { MODKEY,           XK_Left,        focusmon,       {.i = -1 } }, */
+    /* { MODKEY|ShiftMask, XK_Left,        tagmon,         {.i = -1 } }, */
+    /* { MODKEY,           XK_Right,       focusmon,       {.i = +1 } }, */
+    /* { MODKEY|ShiftMask, XK_Right,       tagmon,         {.i = +1 } }, */
     { MODKEY,           XK_Page_Up,     shiftview,      { .i = -1 } },
     { MODKEY|ShiftMask, XK_Page_Up,     shifttag,       { .i = -1 } },
     { MODKEY,           XK_Page_Down,   shiftview,      { .i = +1 } },
