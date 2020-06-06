@@ -65,21 +65,17 @@ static const int resizehints = 1;    /* 1 means respect size hints in tiled resi
 #define FORCE_VSPLIT 1  /* nrowgrid layout: force two clients to always split vertically */
 #include "vanitygaps.c"
 static const Layout layouts[] = {
-    /* symbol     arrange function */
-     { "[]=",    tile },            /* Default: Master on left, slaves on right */
-    { "TTT",    bstack },        /* Master on top, slaves on bottom */
-
-    { "[@]",    spiral },        /* Fibonacci spiral */
-    { "[\\]",    dwindle },        /* Decreasing in size right and leftward */
-
-    { "H[]",    deck },            /* Master on left, slaves in monocle-like mode on right */
-     { "[M]",    monocle },        /* All windows on top of eachother */
-
-    { "|M|",    centeredmaster },        /* Master in middle, slaves on sides */
-    { ">M>",    centeredfloatingmaster },    /* Same but master floats */
-
-    { "><>",    NULL },            /* no layout function means floating behavior */
-    { NULL,        NULL },
+    /* symbol arrange function */
+    { "[]=",  tile },                   /* Default: Master on left, slaves on right */
+    { "TTT",  bstack },                 /* Master on top, slaves on bottom */
+    { "[@]",  spiral },                 /* Fibonacci spiral */
+    { "[\\]", dwindle },                /* Decreasing in size right and leftward */
+    { "H[]",  deck },                   /* Master on left, slaves in monocle-like mode on right */
+    { "[M]",  monocle },                /* All windows on top of eachother */
+    { "|M|",  centeredmaster },         /* Master in middle, slaves on sides */
+    { ">M>",  centeredfloatingmaster }, /* Same but master floats */
+    { "><>",  NULL },                   /* no layout function means floating behavior */
+    { NULL,   NULL },
 };
 
 /* key definitions */
@@ -108,83 +104,83 @@ static const char *termcmd[]  = { "alacritty", NULL };
 #include <X11/XF86keysym.h>
 #include "shiftview.c"
 static Key keys[] = {
-    /* modifier                     key        function        argument */
-    STACKKEYS(MODKEY,                          focus)
-    STACKKEYS(MODKEY|ShiftMask,                push)
-    TAGKEYS(            XK_1,        0)
-    TAGKEYS(            XK_2,        1)
-    TAGKEYS(            XK_3,        2)
-    TAGKEYS(            XK_4,        3)
-    TAGKEYS(            XK_5,        4)
-    TAGKEYS(            XK_6,        5)
-    TAGKEYS(            XK_7,        6)
-    TAGKEYS(            XK_8,        7)
-    TAGKEYS(            XK_9,        8)
-    { MODKEY,           XK_0,           view,           {.ui = ~0 } },
-    { MODKEY|ShiftMask, XK_0,           tag,            {.ui = ~0 } },
-    { MODKEY,           XK_BackSpace,   spawn,          SHCMD("sysact") },
-    { MODKEY|ShiftMask, XK_BackSpace,   spawn,          SHCMD("sysact") },
-    { MODKEY,           XK_Tab,         view,           {0} },
-    { MODKEY,           XK_q,           killclient,     {0} },
-    { MODKEY,           XK_w,           spawn,          SHCMD("firefox") },
-    { MODKEY|ShiftMask, XK_w,           spawn,          SHCMD("alacritty -e sudo nmtui") },
-    { MODKEY,           XK_r,           spawn,          SHCMD("alacritty -e ranger") },
-    { MODKEY|ShiftMask, XK_r,           spawn,          SHCMD("alacritty -e htop") },
-    { MODKEY,           XK_t,           setlayout,      {.v = &layouts[0]} },
-    { MODKEY|ShiftMask, XK_t,           setlayout,      {.v = &layouts[1]} },
-    { MODKEY,           XK_y,           setlayout,      {.v = &layouts[2]} },
-    { MODKEY|ShiftMask, XK_y,           setlayout,      {.v = &layouts[3]} },
-    { MODKEY,           XK_u,           setlayout,      {.v = &layouts[4]} },
-    { MODKEY|ShiftMask, XK_u,           setlayout,      {.v = &layouts[5]} },
-    { MODKEY,           XK_i,           setlayout,      {.v = &layouts[6]} },
-    { MODKEY|ShiftMask, XK_i,           setlayout,      {.v = &layouts[7]} },
-    { MODKEY,           XK_o,           incnmaster,     {.i = +1 } },
-    { MODKEY|ShiftMask, XK_o,           incnmaster,     {.i = -1 } },
-    { MODKEY,           XK_backslash,   view,           {0} },
-    { MODKEY,           XK_a,           togglegaps,     {0} },
-    { MODKEY|ShiftMask, XK_a,           defaultgaps,    {0} },
-    { MODKEY,           XK_s,           togglesticky,   {0} },
-    { MODKEY,           XK_d,           spawn,          {.v = dmenucmd } },
-    { MODKEY,           XK_f,           togglefullscr,  {0} },
-    { MODKEY|ShiftMask, XK_f,           setlayout,      {.v = &layouts[8]} },
-    { MODKEY,           XK_g,           shiftview,      { .i = -1 } },
-    { MODKEY|ShiftMask, XK_g,           shifttag,       { .i = -1 } },
-    { MODKEY,           XK_h,           setmfact,       {.f = -0.05} },
-    { MODKEY,           XK_l,           setmfact,       {.f = +0.05} },
-    { MODKEY,           XK_semicolon,   shiftview,      { .i = 1 } },
-    { MODKEY|ShiftMask, XK_semicolon,   shifttag,       { .i = 1 } },
-    { MODKEY,           XK_apostrophe,  togglescratch,  {.ui = 1} },
-    { MODKEY,           XK_Return,      spawn,          {.v = termcmd } },
-    { MODKEY|ShiftMask, XK_Return,      togglescratch,  {.ui = 0} },
-    { MODKEY,           XK_z,           incrgaps,       {.i = +3 } },
-    { MODKEY,           XK_x,           incrgaps,       {.i = -3 } },
-    { MODKEY,           XK_b,           togglebar,      {0} },
-    { MODKEY|ControlMask,           XK_Left,        focusmon,       {.i = -1 } },
-    { MODKEY|ShiftMask, XK_Left,        tagmon,         {.i = -1 } },
-    { MODKEY|ControlMask,           XK_Right,       focusmon,       {.i = +1 } },
-    { MODKEY|ShiftMask, XK_Right,       tagmon,         {.i = +1 } },
-    { MODKEY,           XK_less,     shiftview,      { .i = -1 } },
-    { MODKEY|ShiftMask, XK_less,   shiftview,      { .i = +1 } },
-    { MODKEY,           XK_Page_Up,     shiftview,      { .i = -1 } },
-    { MODKEY|ShiftMask, XK_Page_Up,     shifttag,       { .i = -1 } },
-    { MODKEY,           XK_Page_Down,   shiftview,      { .i = +1 } },
-    { MODKEY|ShiftMask, XK_Page_Down,   shifttag,       { .i = +1 } },
-    { MODKEY,           XK_Insert,      spawn,          SHCMD("notify-send \"📋 Clipboard contents:\" \"$(xclip -o -selection clipboard)\"") },
-    { MODKEY,           XK_F1,          spawn,          SHCMD("pulseaudio-ctl mute") },
-    { MODKEY,           XK_F2,          spawn,          SHCMD("pulseaudio-ctl down") },
-    { MODKEY,           XK_F3,          spawn,          SHCMD("pulseaudio-ctl up") },
-    { MODKEY,           XK_F12,         xrdb,           {.v = NULL } },
-    { MODKEY,           XK_space,       zoom,           {0} },
-    { MODKEY|ShiftMask, XK_space,       togglefloating, {0} },
-    { 0, XF86XK_WWW,                    spawn,          SHCMD("$BROWSER") },
-    { 0, XF86XK_DOS,                    spawn,          SHCMD("alacritty") },
-    { 0, XF86XK_TaskPane,               spawn,          SHCMD("alacritty -e htop") },
-    { 0, XF86XK_MyComputer,             spawn,          SHCMD("alacritty -e ranger /") },
+    /* modifier                 key                 function        argument */
+    STACKKEYS(MODKEY,                               focus)
+    STACKKEYS(MODKEY|ShiftMask,                     push)
+    TAGKEYS(                    XK_1,               0)
+    TAGKEYS(                    XK_2,               1)
+    TAGKEYS(                    XK_3,               2)
+    TAGKEYS(                    XK_4,               3)
+    TAGKEYS(                    XK_5,               4)
+    TAGKEYS(                    XK_6,               5)
+    TAGKEYS(                    XK_7,               6)
+    TAGKEYS(                    XK_8,               7)
+    TAGKEYS(                    XK_9,               8)
+    { MODKEY,                   XK_0,               view,           {.ui = ~0 } },
+    { MODKEY|ShiftMask,         XK_0,               tag,            {.ui = ~0 } },
+    { MODKEY,                   XK_BackSpace,       spawn,          SHCMD("sysact") },
+    { MODKEY|ShiftMask,         XK_BackSpace,       spawn,          SHCMD("sysact") },
+    { MODKEY,                   XK_Tab,             view,           {0} },
+    { MODKEY,                   XK_q,               killclient,     {0} },
+    { MODKEY,                   XK_w,               spawn,          SHCMD("firefox") },
+    { MODKEY|ShiftMask,         XK_w,               spawn,          SHCMD("alacritty -e sudo nmtui") },
+    { MODKEY,                   XK_r,               spawn,          SHCMD("alacritty -e ranger") },
+    { MODKEY|ShiftMask,         XK_r,               spawn,          SHCMD("alacritty -e htop") },
+    { MODKEY,                   XK_t,               setlayout,      {.v = &layouts[0]} },
+    { MODKEY|ShiftMask,         XK_t,               setlayout,      {.v = &layouts[1]} },
+    { MODKEY,                   XK_y,               setlayout,      {.v = &layouts[2]} },
+    { MODKEY|ShiftMask,         XK_y,               setlayout,      {.v = &layouts[3]} },
+    { MODKEY,                   XK_u,               setlayout,      {.v = &layouts[4]} },
+    { MODKEY|ShiftMask,         XK_u,               setlayout,      {.v = &layouts[5]} },
+    { MODKEY,                   XK_i,               setlayout,      {.v = &layouts[6]} },
+    { MODKEY|ShiftMask,         XK_i,               setlayout,      {.v = &layouts[7]} },
+    { MODKEY,                   XK_o,               incnmaster,     {.i = +1 } },
+    { MODKEY|ShiftMask,         XK_o,               incnmaster,     {.i = -1 } },
+    { MODKEY,                   XK_backslash,       view,           {0} },
+    { MODKEY,                   XK_a,               togglegaps,     {0} },
+    { MODKEY|ShiftMask,         XK_a,               defaultgaps,    {0} },
+    { MODKEY,                   XK_s,               togglesticky,   {0} },
+    { MODKEY,                   XK_d,               spawn,          {.v = dmenucmd } },
+    { MODKEY,                   XK_f,               togglefullscr,  {0} },
+    { MODKEY|ShiftMask,         XK_f,               setlayout,      {.v = &layouts[8]} },
+    { MODKEY,                   XK_g,               shiftview,      { .i = -1 } },
+    { MODKEY|ShiftMask,         XK_g,               shifttag,       { .i = -1 } },
+    { MODKEY,                   XK_h,               setmfact,       {.f = -0.05} },
+    { MODKEY,                   XK_l,               setmfact,       {.f = +0.05} },
+    { MODKEY,                   XK_semicolon,       shiftview,      { .i = 1 } },
+    { MODKEY|ShiftMask,         XK_semicolon,       shifttag,       { .i = 1 } },
+    { MODKEY,                   XK_apostrophe,      togglescratch,  {.ui = 1} },
+    { MODKEY,                   XK_Return,          spawn,          {.v = termcmd } },
+    { MODKEY|ShiftMask,         XK_Return,          togglescratch,  {.ui = 0} },
+    { MODKEY,                   XK_z,               incrgaps,       {.i = +3 } },
+    { MODKEY,                   XK_x,               incrgaps,       {.i = -3 } },
+    { MODKEY,                   XK_b,               togglebar,      {0} },
+    { MODKEY|ControlMask,       XK_Left,            focusmon,       {.i = -1 } },
+    { MODKEY|ShiftMask,         XK_Left,            tagmon,         {.i = -1 } },
+    { MODKEY|ControlMask,       XK_Right,           focusmon,       {.i = +1 } },
+    { MODKEY|ShiftMask,         XK_Right,           tagmon,         {.i = +1 } },
+    { MODKEY,                   XK_less,            shiftview,      { .i = -1 } },
+    { MODKEY|ShiftMask,         XK_less,            shiftview,      { .i = +1 } },
+    { MODKEY,                   XK_Page_Up,         shiftview,      { .i = -1 } },
+    { MODKEY|ShiftMask,         XK_Page_Up,         shifttag,       { .i = -1 } },
+    { MODKEY,                   XK_Page_Down,       shiftview,      { .i = +1 } },
+    { MODKEY|ShiftMask,         XK_Page_Down,       shifttag,       { .i = +1 } },
+    { MODKEY,                   XK_Insert,          spawn,          SHCMD("notify-send \"📋 Clipboard contents:\" \"$(xclip -o -selection clipboard)\"") },
+    { MODKEY,                   XK_F1,              spawn,          SHCMD("pulseaudio-ctl mute") },
+    { MODKEY,                   XK_F2,              spawn,          SHCMD("pulseaudio-ctl down") },
+    { MODKEY,                   XK_F3,              spawn,          SHCMD("pulseaudio-ctl up") },
+    { MODKEY,                   XK_F12,             xrdb,           {.v = NULL } },
+    { MODKEY,                   XK_space,           zoom,           {0} },
+    { MODKEY|ShiftMask,         XK_space,           togglefloating, {0} },
+    { 0,                        XF86XK_WWW,         spawn,          SHCMD("$BROWSER") },
+    { 0,                        XF86XK_DOS,         spawn,          SHCMD("alacritty") },
+    { 0,                        XF86XK_TaskPane,    spawn,          SHCMD("alacritty -e htop") },
+    { 0,                        XF86XK_MyComputer,  spawn,          SHCMD("alacritty -e ranger /") },
+    { 0,                        XF86XK_PowerOff,    spawn,          SHCMD("sysact") },
     /* { 0, XF86XK_TouchpadOff,            spawn,          SHCMD("synclient TouchpadOff=1") }, */
     /* { 0, XF86XK_TouchpadOn,             spawn,          SHCMD("synclient TouchpadOff=0") }, */
     /* { 0, XF86XK_MonBrightnessUp,        spawn,          SHCMD("xbacklight -inc 15") }, */
     /* { 0, XF86XK_MonBrightnessDown,      spawn,          SHCMD("xbacklight -dec 15") }, */
-    { 0, XF86XK_PowerOff,               spawn,          SHCMD("sysact") },
 };
 
 /* button definitions */
