@@ -67,11 +67,11 @@ static const int resizehints = 1;    /* 1 means respect size hints in tiled resi
 static const Layout layouts[] = {
     /* symbol arrange function */
     { "[]=",  tile },                   /* Default: Master on left, slaves on right */
+    { "[M]",  monocle },                /* All windows on top of eachother */
     { "TTT",  bstack },                 /* Master on top, slaves on bottom */
     { "[@]",  spiral },                 /* Fibonacci spiral */
     { "[\\]", dwindle },                /* Decreasing in size right and leftward */
     { "H[]",  deck },                   /* Master on left, slaves in monocle-like mode on right */
-    { "[M]",  monocle },                /* All windows on top of eachother */
     { "|M|",  centeredmaster },         /* Master in middle, slaves on sides */
     { ">M>",  centeredfloatingmaster }, /* Same but master floats */
     { "><>",  NULL },                   /* no layout function means floating behavior */
@@ -154,7 +154,7 @@ static Key keys[] = {
     { MODKEY|ShiftMask,         XK_Return,          togglescratch,  {.ui = 0} },
     { MODKEY,                   XK_z,               incrgaps,       {.i = +3 } },
     { MODKEY,                   XK_x,               incrgaps,       {.i = -3 } },
-    { MODKEY,                   XK_b,               togglebar,      {0} },
+    { MODKEY,                   XK_b,               spawn,          SHCMD("rofi -show window") },
     { MODKEY|ControlMask,       XK_Left,            focusmon,       {.i = -1 } },
     { MODKEY|ShiftMask,         XK_Left,            tagmon,         {.i = -1 } },
     { MODKEY|ControlMask,       XK_Right,           focusmon,       {.i = +1 } },
