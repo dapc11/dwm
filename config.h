@@ -99,7 +99,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 /*static const char *termcmd[]  = { "st", NULL };*/
-static const char *termcmd[]  = { "alacritty", NULL };
+static const char *termcmd[]  = { "xterm", NULL };
 
 #include <X11/XF86keysym.h>
 #include "shiftview.c"
@@ -123,9 +123,9 @@ static Key keys[] = {
     { MODKEY,                   XK_Tab,             view,           {0} },
     { MODKEY,                   XK_q,               killclient,     {0} },
     { MODKEY,                   XK_w,               spawn,          SHCMD("firefox") },
-    { MODKEY|ShiftMask,         XK_w,               spawn,          SHCMD("alacritty -e sudo nmtui") },
-    { MODKEY,                   XK_r,               spawn,          SHCMD("alacritty -e ranger") },
-    { MODKEY|ShiftMask,         XK_r,               spawn,          SHCMD("alacritty -e htop") },
+    { MODKEY|ShiftMask,         XK_w,               spawn,          SHCMD("xterm -e sudo nmtui") },
+    { MODKEY,                   XK_r,               spawn,          SHCMD("xterm -e ranger") },
+    { MODKEY|ShiftMask,         XK_r,               spawn,          SHCMD("xterm -e htop") },
     { MODKEY,                   XK_t,               setlayout,      {.v = &layouts[0]} },
     { MODKEY|ShiftMask,         XK_t,               setlayout,      {.v = &layouts[1]} },
     { MODKEY,                   XK_y,               setlayout,      {.v = &layouts[2]} },
@@ -173,9 +173,9 @@ static Key keys[] = {
     { MODKEY,                   XK_space,           zoom,           {0} },
     { MODKEY|ShiftMask,         XK_space,           togglefloating, {0} },
     { 0,                        XF86XK_WWW,         spawn,          SHCMD("$BROWSER") },
-    { 0,                        XF86XK_DOS,         spawn,          SHCMD("alacritty") },
-    { 0,                        XF86XK_TaskPane,    spawn,          SHCMD("alacritty -e htop") },
-    { 0,                        XF86XK_MyComputer,  spawn,          SHCMD("alacritty -e ranger /") },
+    { 0,                        XF86XK_DOS,         spawn,          SHCMD("xterm") },
+    { 0,                        XF86XK_TaskPane,    spawn,          SHCMD("xterm -e htop") },
+    { 0,                        XF86XK_MyComputer,  spawn,          SHCMD("xterm -e ranger /") },
     { 0,                        XF86XK_PowerOff,    spawn,          SHCMD("sysact") },
     { MODKEY,                   XK_n,               spawn,          SHCMD("nightmode") },
     /* { 0, XF86XK_TouchpadOff,            spawn,          SHCMD("synclient TouchpadOff=1") }, */
