@@ -49,16 +49,15 @@ static const Rule rules[] = {
      *    WM_NAME(STRING) = title
      */
     /* class      instance    title             tags mask     isfloating   isterminal noswallow monitor */
-    { "Gimp",     NULL,       NULL,             1 << 8,       0,           0,         0,        -1 },
-    { "St",       NULL,       NULL,             1,            0,           1,         0,        -1 },
-    { "Alacritty",NULL,       NULL,             1,            0,           1,         0,        -1 },
-    { "XTerm",    NULL,       NULL,             1,            0,           1,         0,        -1 },
-    { "firefox",  NULL,       NULL,             2,            0,           1,         0,        -1 },
-    { "Evolution",NULL,       NULL,             8,            0,           1,         0,        -1 },
-    { "Thunderbird",NULL,     NULL,             8,            0,           1,         0,        -1 },
-    { NULL,       NULL,       "Event Tester",   0,            0,           0,         1,        -1 },
-    { NULL,      "spterm",    NULL,             SPTAG(0),     1,           1,         0,        -1 },
-    { NULL,      "spcalc",    NULL,             SPTAG(1),     1,           1,         0,        -1 },
+    { "Gimp",       NULL,       NULL,             1 << 8,       0,           0,         0,        -1 },
+    { "firefox",    NULL,       NULL,             2,            0,           1,         0,        -1 },
+    { "Evolution",  NULL,       NULL,             8,            0,           1,         0,        -1 },
+    { "code-oss",   NULL,       NULL,             4,            0,           1,         0,        -1 },
+    { "Thunderbird",NULL,       NULL,             8,            0,           1,         0,        -1 },
+    { "Thunar",     NULL,       NULL,             16,            0,           1,         0,        -1 },
+    { NULL,         NULL,       "Event Tester",   0,            0,           0,         1,        -1 },
+    { NULL,         "spterm",   NULL,             SPTAG(0),     1,           1,         0,        -1 },
+    { NULL,         "spcalc",   NULL,             SPTAG(1),     1,           1,         0,        -1 },
 };
 
 /* layout(s) */
