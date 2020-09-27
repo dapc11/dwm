@@ -11,6 +11,13 @@ static const int swallowfloating    = 0;        /* 1 means swallow floating wind
 static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
+/*  Display modes of the tab bar: never shown, always shown, shown only in  */
+/*  monocle mode in the presence of several windows.                        */
+/*  Modes after showtab_nmodes are disabled.                                */
+enum showtab_modes { showtab_never, showtab_auto, showtab_nmodes, showtab_always};
+static const int showtab			= showtab_auto;        /* Default tab bar show mode */
+static const int toptab				= False;               /* False means bottom tab bar */
+
 static const char *fonts[]          = { "hack:size=10", "JoyPixels:pixelsize=10:antialias=true:autohint=true"  };
 static char dmenufont[]             = "monospace:size=10";
 static char normbgcolor[]           = "#222222";
@@ -157,6 +164,7 @@ static Key keys[] = {
     { MODKEY,                   XK_apostrophe,      togglescratch,  {.ui = 1} },
     { MODKEY,                   XK_Return,          spawn,          {.v = termcmd } },
     { MODKEY|ShiftMask,         XK_Return,          togglescratch,  {.ui = 0} },
+	{ MODKEY|ShiftMask,         XK_w,               tabmode,        {-1} },
     { MODKEY,                   XK_z,               incrgaps,       {.i = +3 } },
     { MODKEY,                   XK_x,               incrgaps,       {.i = -3 } },
     { MODKEY,                   XK_s,               spawn,          SHCMD("rofi -show window") },
@@ -200,6 +208,7 @@ static Button buttons[] = {
     { ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
     { ClkClientWin,         MODKEY,         Button4,        incrgaps,       {.i = +1} },
     { ClkClientWin,         MODKEY,         Button5,        incrgaps,       {.i = -1} },
+	{ ClkTabBar,            0,              Button1,        focuswin,       {0} },
     { ClkTagBar,            0,              Button1,        view,           {0} },
     { ClkTagBar,            0,              Button3,        toggleview,     {0} },
     { ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
