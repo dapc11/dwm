@@ -8,7 +8,7 @@ static const unsigned int gappiv    = 10;       /* vert inner gap between window
 static const unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov    = 10;       /* vert outer gap between windows and screen edge */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
-static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
+static const int smartgaps          = 1;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 /*  Display modes of the tab bar: never shown, always shown, shown only in  */
@@ -18,8 +18,8 @@ enum showtab_modes { showtab_never, showtab_auto, showtab_nmodes, showtab_always
 static const int showtab			= showtab_auto;        /* Default tab bar show mode */
 static const int toptab				= False;               /* False means bottom tab bar */
 
-static const char *fonts[]          = { "hack:size=10", "JoyPixels:pixelsize=10:antialias=true:autohint=true"  };
-static char dmenufont[]             = "monospace:size=10";
+static const char *fonts[]          = { "DejaVu Sans:size=12" };
+static char dmenufont[]             = "DejaVu Sans Mono:size=11";
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
@@ -39,8 +39,8 @@ typedef struct {
     const char *name;
     const void *cmd;
 } Sp;
-const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x34", NULL };
-const char *spcmd2[] = {"st", "-n", "spcalc", "-f", "monospace:size=16", "-g", "50x20", "-e", "bc", "-lq", NULL };
+const char *spcmd1[] = {"alacritty", "--class", "spterm", "-d", "120", "34", NULL };
+const char *spcmd2[] = {"alacritty", "--class", "spcalc", "-d", "50", "20", "-e", "bc", "-lq", NULL };
 static Sp scratchpads[] = {
     /* name          cmd  */
     {"spterm",      spcmd1},
@@ -55,20 +55,20 @@ static const Rule rules[] = {
      *    WM_CLASS(STRING) = instance, class
      *    WM_NAME(STRING) = title
      */
-    /* class      instance    title             tags mask     isfloating   isterminal noswallow monitor */
-    { "Gimp",       NULL,       NULL,             1 << 8,       0,           0,         0,        -1 },
-    { "firefox",    NULL,       NULL,             2,            0,           1,         0,        -1 },
-    { "Firefox",    NULL,       NULL,             2,            0,           1,         0,        -1 },
-    { "Firefox",    NULL,       NULL,             2,            0,           1,         0,        -1 },
-    { "google-chrome",    NULL,       NULL,             2,            0,           1,         0,        -1 },
-    { "Google-chrome",    NULL,       NULL,             2,            0,           1,         0,        -1 },
-    { "Evolution",  NULL,       NULL,             8,            0,           1,         0,        -1 },
-    { "code-oss",   NULL,       NULL,             4,            0,           1,         0,        -1 },
-    { "Thunderbird",NULL,       NULL,             8,            0,           1,         0,        -1 },
-    { "Thunar",     NULL,       NULL,             16,            0,           1,         0,        -1 },
-    { NULL,         NULL,       "Event Tester",   0,            0,           0,         1,        -1 },
-    { NULL,         "spterm",   NULL,             SPTAG(0),     1,           1,         0,        -1 },
-    { NULL,         "spcalc",   NULL,             SPTAG(1),     1,           1,         0,        -1 },
+    /*  class                instance   title   tags       mask  isfloating  isterminal  noswallow  monitor  */
+    {   "Gimp",              NULL,      NULL,   1          <<    8,          0,          0,         0,       -1  },
+    {   "firefox",           NULL,      NULL,   2,         0,    1,          0,          -1         },
+    {   "Firefox",           NULL,      NULL,   2,         0,    1,          0,          -1         },
+    {   "Firefox",           NULL,      NULL,   2,         0,    1,          0,          -1         },
+    {   "google-chrome",     NULL,      NULL,   2,         0,    1,          0,          -1         },
+    {   "Google-chrome",     NULL,      NULL,   2,         0,    1,          0,          -1         },
+    {   "Evolution",         NULL,      NULL,   8,         0,    1,          0,          -1         },
+    {   "code-oss",          NULL,      NULL,   4,         0,    1,          0,          -1         },
+    {   "Thunderbird",       NULL,      NULL,   8,         0,    1,          0,          -1         },
+    {   "Thunar",            NULL,      NULL,   16,        0,    1,          0,          -1         },
+    {   NULL,                NULL,      "Event  Tester",   0,    0,          0,          1,         -1       },
+    {   NULL,                "spterm",  NULL,   SPTAG(0),  1,    1,          0,          -1         },
+    {   NULL,                "spcalc",  NULL,   SPTAG(1),  1,    1,          0,          -1         },
 };
 
 /* layout(s) */
@@ -112,7 +112,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 /*static const char *termcmd[]  = { "st", NULL };*/
-static const char *termcmd[]  = { "gnome-terminal", NULL };
+static const char *termcmd[]  = { "alacritty", NULL };
 
 #include <X11/XF86keysym.h>
 #include "shiftview.c"
@@ -136,9 +136,9 @@ static Key keys[] = {
     { MODKEY,                   XK_Tab,             view,           {0} },
     { MODKEY,                   XK_q,               killclient,     {0} },
     { MODKEY,                   XK_w,               spawn,          SHCMD("firefox") },
-    { MODKEY|ShiftMask,         XK_w,               spawn,          SHCMD("xterm -e sudo nmtui") },
-    { MODKEY,                   XK_r,               spawn,          SHCMD("xterm -e ranger") },
-    { MODKEY|ShiftMask,         XK_r,               spawn,          SHCMD("xterm -e htop") },
+    { MODKEY|ShiftMask,         XK_w,               spawn,          SHCMD("alacritty -e sudo nmtui") },
+    { MODKEY,                   XK_r,               spawn,          SHCMD("alacritty -e ranger") },
+    { MODKEY|ShiftMask,         XK_r,               spawn,          SHCMD("alacritty -e htop") },
     { MODKEY,                   XK_t,               setlayout,      {.v = &layouts[0]} },
     { MODKEY|ShiftMask,         XK_t,               setlayout,      {.v = &layouts[1]} },
     { MODKEY,                   XK_y,               setlayout,      {.v = &layouts[2]} },
@@ -187,9 +187,9 @@ static Key keys[] = {
     { MODKEY,                   XK_space,           zoom,           {0} },
     { MODKEY|ShiftMask,         XK_space,           togglefloating, {0} },
     { 0,                        XF86XK_WWW,         spawn,          SHCMD("$BROWSER") },
-    { 0,                        XF86XK_DOS,         spawn,          SHCMD("xterm") },
-    { 0,                        XF86XK_TaskPane,    spawn,          SHCMD("xterm -e htop") },
-    { 0,                        XF86XK_MyComputer,  spawn,          SHCMD("xterm -e ranger /") },
+    { 0,                        XF86XK_DOS,         spawn,          SHCMD("alacritty") },
+    { 0,                        XF86XK_TaskPane,    spawn,          SHCMD("alacritty -e htop") },
+    { 0,                        XF86XK_MyComputer,  spawn,          SHCMD("alacritty -e ranger /") },
     { 0,                        XF86XK_PowerOff,    spawn,          SHCMD("sysact") },
     { MODKEY,                   XK_n,               spawn,          SHCMD("nightmode") },
     /* { 0, XF86XK_TouchpadOff,            spawn,          SHCMD("synclient TouchpadOff=1") }, */
