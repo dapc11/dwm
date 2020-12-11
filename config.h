@@ -55,20 +55,24 @@ static const Rule rules[] = {
      *    WM_CLASS(STRING) = instance, class
      *    WM_NAME(STRING) = title
      */
-    /*  class                instance   title   tags       mask  isfloating  isterminal  noswallow  monitor  */
-    {   "Gimp",              NULL,      NULL,   1          <<    8,          0,          0,         0,       -1  },
-    {   "firefox",           NULL,      NULL,   2,         0,    1,          0,          -1         },
-    {   "Firefox",           NULL,      NULL,   2,         0,    1,          0,          -1         },
-    {   "Firefox",           NULL,      NULL,   2,         0,    1,          0,          -1         },
-    {   "google-chrome",     NULL,      NULL,   2,         0,    1,          0,          -1         },
-    {   "Google-chrome",     NULL,      NULL,   2,         0,    1,          0,          -1         },
-    {   "Evolution",         NULL,      NULL,   8,         0,    1,          0,          -1         },
-    {   "code-oss",          NULL,      NULL,   4,         0,    1,          0,          -1         },
-    {   "Thunderbird",       NULL,      NULL,   8,         0,    1,          0,          -1         },
-    {   "Thunar",            NULL,      NULL,   16,        0,    1,          0,          -1         },
-    {   NULL,                NULL,      "Event  Tester",   0,    0,          0,          1,         -1       },
-    {   NULL,                "spterm",  NULL,   SPTAG(0),  1,    1,          0,          -1         },
-    {   NULL,                "spcalc",  NULL,   SPTAG(1),  1,    1,          0,          -1         },
+/*  class                        instance   title  tags mask  isfloating  isterminal  noswallow  monitor  */
+{   "Gimp",                      NULL,      NULL,  1 << 8,    0,          0,          0,         -1  },
+{   "firefox",                   NULL,      NULL,  1 << 1,    0,          0,          0,         -1  },
+{   "Firefox",                   NULL,      NULL,  1 << 1,    0,          0,          0,         -1  },
+{   "google-chrome",             NULL,      NULL,  1 << 1,    0,          0,          0,         -1  },
+{   "Google-chrome",             NULL,      NULL,  1 << 1,    0,          0,          0,         -1  },
+{   "code-oss",                  NULL,      NULL,  1 << 3,    0,          0,          0,         -1  },
+{   "Code",                      NULL,      NULL,  1 << 3,    0,          0,          0,         -1  },
+{   "Thunderbird",               NULL,      NULL,  1 << 1,    0,          0,          0,         0   },
+{   "Evolution",                 NULL,      NULL,  1 << 1,    0,          0,          0,         0   },
+{   "Evolution-alarm-notify",    NULL,      NULL,  1,         0,          0,          0,         0   },
+{   "Microsoft Teams - Preview", NULL,      NULL,  1,         0,          0,          0,         0   },
+{   "PulseUi",                   NULL,      NULL,  1 << 2,    0,          0,          0,         0   },
+{   "Spotify",                   NULL,      NULL,  1 << 3,    0,          0,          0,         0   },
+{   "Nautilus",                  NULL,      NULL,  0,         0,          0,          0,         -1  },
+{   "Thunar",                    NULL,      NULL,  0,         0,          0,          0,         -1  },
+{   NULL,                        "spterm",  NULL,  SPTAG(0),  1,          1,          0,         -1  },
+{   NULL,                        "spterm",  NULL,  SPTAG(0),  1,          1,          0,         -1  },
 };
 
 /* layout(s) */
@@ -135,10 +139,9 @@ static Key keys[] = {
     { MODKEY|ShiftMask,         XK_BackSpace,       spawn,          SHCMD("sysact") },
     { MODKEY,                   XK_Tab,             view,           {0} },
     { MODKEY,                   XK_q,               killclient,     {0} },
-    { MODKEY,                   XK_w,               spawn,          SHCMD("firefox") },
+    { MODKEY,                   XK_w,               spawn,          SHCMD("google-chrome") },
     { MODKEY|ShiftMask,         XK_w,               spawn,          SHCMD("alacritty -e sudo nmtui") },
-    { MODKEY,                   XK_r,               spawn,          SHCMD("alacritty -e ranger") },
-    { MODKEY|ShiftMask,         XK_r,               spawn,          SHCMD("alacritty -e htop") },
+    { MODKEY,                   XK_r,               spawn,          SHCMD("nautilus") },
     { MODKEY,                   XK_t,               setlayout,      {.v = &layouts[0]} },
     { MODKEY|ShiftMask,         XK_t,               setlayout,      {.v = &layouts[1]} },
     { MODKEY,                   XK_y,               setlayout,      {.v = &layouts[2]} },
@@ -179,23 +182,20 @@ static Key keys[] = {
     { MODKEY|ShiftMask,         XK_Page_Up,         shifttag,       { .i = -1 } },
     { MODKEY,                   XK_Page_Down,       shiftview,      { .i = +1 } },
     { MODKEY|ShiftMask,         XK_Page_Down,       shifttag,       { .i = +1 } },
-    { MODKEY,                   XK_Insert,          spawn,          SHCMD("notify-send \"📋 Clipboard contents:\" \"$(xclip -o -selection clipboard)\"") },
-    { MODKEY,                   XK_F1,              spawn,          SHCMD("pactl set-sink-mute 0 toggle") },
-    { MODKEY,                   XK_F2,              spawn,          SHCMD("pactl -- set-sink-volume 0 -10%") },
-    { MODKEY,                   XK_F3,              spawn,          SHCMD("pactl -- set-sink-volume 0 +10%") },
     { MODKEY,                   XK_F12,             xrdb,           {.v = NULL } },
     { MODKEY,                   XK_space,           zoom,           {0} },
     { MODKEY|ShiftMask,         XK_space,           togglefloating, {0} },
-    { 0,                        XF86XK_WWW,         spawn,          SHCMD("$BROWSER") },
     { 0,                        XF86XK_DOS,         spawn,          SHCMD("alacritty") },
-    { 0,                        XF86XK_TaskPane,    spawn,          SHCMD("alacritty -e htop") },
-    { 0,                        XF86XK_MyComputer,  spawn,          SHCMD("alacritty -e ranger /") },
     { 0,                        XF86XK_PowerOff,    spawn,          SHCMD("sysact") },
     { MODKEY,                   XK_n,               spawn,          SHCMD("nightmode") },
-    /* { 0, XF86XK_TouchpadOff,            spawn,          SHCMD("synclient TouchpadOff=1") }, */
-    /* { 0, XF86XK_TouchpadOn,             spawn,          SHCMD("synclient TouchpadOff=0") }, */
-    /* { 0, XF86XK_MonBrightnessUp,        spawn,          SHCMD("xbacklight -inc 15") }, */
-    /* { 0, XF86XK_MonBrightnessDown,      spawn,          SHCMD("xbacklight -dec 15") }, */
+    { 0,                        XF86XK_AudioMute,      spawn,          SHCMD("pactl set-sink-mute 0 toggle") },
+    { 0,                        XF86XK_AudioLowerVolume, spawn,        SHCMD("pactl -- set-sink-volume 0 -10%") },
+    { 0,                        XF86XK_AudioRaiseVolume, spawn,        SHCMD("pactl -- set-sink-volume 0 +10%") },
+    { 0,                        XF86XK_AudioPrev,        spawn,        SHCMD("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous") },
+    { 0,                        XF86XK_AudioPlay,        spawn,        SHCMD("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause") },
+    { 0,                        XF86XK_AudioNext,        spawn,        SHCMD("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next") },
+    { 0,                        XF86XK_MonBrightnessUp,        spawn,          SHCMD("dimmer -i") },
+    { 0,                        XF86XK_MonBrightnessDown,      spawn,          SHCMD("dimmer -d") },
 };
 
 /* button definitions */
