@@ -1,38 +1,37 @@
-/* See LICENSE file for copyright and license details. */
-
 /* appearance */
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
-static const unsigned int snap      = 32;       /* snap pixel */
-static const unsigned int gappih    = 5;        /* horiz inner gap between windows */
-static const unsigned int gappiv    = 10;       /* vert inner gap between windows */
-static const unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov    = 10;       /* vert outer gap between windows and screen edge */
-static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
-static const int smartgaps          = 1;        /* 1 means no outer gap when there is only one window */
-static const int showbar            = 1;        /* 0 means no bar */
-static const int topbar             = 1;        /* 0 means bottom bar */
+static const unsigned int borderpx  = 1;            /* border pixel of windows */
+static const unsigned int snap      = 32;           /* snap pixel */
+static const unsigned int gappih    = 5;            /* horiz inner gap between windows */
+static const unsigned int gappiv    = 10;           /* vert inner gap between windows */
+static const unsigned int gappoh    = 10;           /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov    = 10;           /* vert outer gap between windows and screen edge */
+static const int swallowfloating    = 0;            /* 1 means swallow floating windows by default */
+static const int smartgaps          = 1;            /* 1 means no outer gap when there is only one window */
+static const int showbar            = 1;            /* 0 means no bar */
+static const int topbar             = 1;            /* 0 means bottom bar */
+
 /*  Display modes of the tab bar: never shown, always shown, shown only in  */
 /*  monocle mode in the presence of several windows.                        */
 /*  Modes after showtab_nmodes are disabled.                                */
 enum showtab_modes { showtab_never, showtab_auto, showtab_nmodes, showtab_always};
-static const int showtab			= showtab_auto;        /* Default tab bar show mode */
-static const int toptab				= False;               /* False means bottom tab bar */
+static const int showtab      = showtab_auto;       /* Default tab bar show mode */
+static const int toptab       = False;              /* False means bottom tab bar */
 
-static const char *fonts[]          = { "DejaVu Sans:size=12" };
-static char dmenufont[]             = "DejaVu Sans Mono:size=11";
-static char normbgcolor[]           = "#222222";
-static char normbordercolor[]       = "#444444";
-static char normfgcolor[]           = "#bbbbbb";
-static char selfgcolor[]            = "#eeeeee";
-static char selbordercolor[]        = "#770000";
-static char selbgcolor[]            = "#005577";
-static char statbgcolor[]           = "#eeeeee";
-static char statbordercolor[]       = "#770000";
-static char statfgcolor[]           = "#005577";
+static const char *fonts[]    = { "DejaVu Sans:size=12" };
+static char dmenufont[]       = "DejaVu Sans Mono:size=11";
+/* fallback colors */
+static char normbgcolor[]     = "#222222";
+static char normbordercolor[] = "#444444";
+static char normfgcolor[]     = "#bbbbbb";
+static char selfgcolor[]      = "#eeeeee";
+static char selbordercolor[]  = "#770000";
+static char selbgcolor[]      = "#005577";
+static char statbgcolor[]     = "#eeeeee";
+static char statbordercolor[] = "#770000";
+static char statfgcolor[]     = "#005577";
 static char *colors[][3] = {
-       /*               fg           bg           border   */
-       [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
-       [SchemeSel]  = { statfgcolor, statbgcolor, statbordercolor },
+    [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
+    [SchemeSel]  = { statfgcolor, statbgcolor, statbordercolor },
 };
 
 typedef struct {
@@ -51,10 +50,6 @@ static Sp scratchpads[] = {
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
-    /* xprop(1):
-     *    WM_CLASS(STRING) = instance, class
-     *    WM_NAME(STRING) = title
-     */
 /*  class                        instance   title  tags mask  isfloating  isterminal  noswallow  monitor  */
 {   "Gimp",                      NULL,      NULL,  1 << 8,    0,          0,          0,         -1  },
 {   "firefox",                   NULL,      NULL,  1 << 1,    0,          0,          0,         -1  },
@@ -79,10 +74,9 @@ static const Rule rules[] = {
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
-#define FORCE_VSPLIT 1  /* nrowgrid layout: force two clients to always split vertically */
+#define FORCE_VSPLIT 1               /* nrowgrid layout: force two clients to always split vertically */
 #include "vanitygaps.c"
 static const Layout layouts[] = {
-    /* symbol arrange function */
     { "[]=",  tile },                   /* Default: Master on left, slaves on right */
     { "[M]",  monocle },                /* All windows on top of eachother */
     { "TTT",  bstack },                 /* Master on top, slaves on bottom */
@@ -121,81 +115,66 @@ static const char *termcmd[]  = { "alacritty", NULL };
 #include <X11/XF86keysym.h>
 #include "shiftview.c"
 static Key keys[] = {
-    /* modifier                 key                 function        argument */
-    STACKKEYS(MODKEY,                               focus)
-    STACKKEYS(MODKEY|ShiftMask,                     push)
-    TAGKEYS(                    XK_1,               0)
-    TAGKEYS(                    XK_2,               1)
-    TAGKEYS(                    XK_3,               2)
-    TAGKEYS(                    XK_4,               3)
-    TAGKEYS(                    XK_5,               4)
-    TAGKEYS(                    XK_6,               5)
-    TAGKEYS(                    XK_7,               6)
-    TAGKEYS(                    XK_8,               7)
-    TAGKEYS(                    XK_9,               8)
-    { MODKEY,                   XK_0,               view,           {.ui = ~0 } },
-    { MODKEY|ShiftMask,         XK_0,               tag,            {.ui = ~0 } },
-    { MODKEY,                   XK_BackSpace,       spawn,          SHCMD("sysact") },
-    { MODKEY|ShiftMask,         XK_BackSpace,       spawn,          SHCMD("sysact") },
-    { MODKEY,                   XK_Tab,             view,           {0} },
-    { MODKEY,                   XK_q,               killclient,     {0} },
-    { MODKEY,                   XK_w,               spawn,          SHCMD("google-chrome") },
-    { MODKEY|ShiftMask,         XK_w,               spawn,          SHCMD("alacritty -e sudo nmtui") },
-    { MODKEY,                   XK_r,               spawn,          SHCMD("nautilus") },
-    { MODKEY,                   XK_t,               setlayout,      {.v = &layouts[0]} },
-    { MODKEY|ShiftMask,         XK_t,               setlayout,      {.v = &layouts[1]} },
-    { MODKEY,                   XK_y,               setlayout,      {.v = &layouts[2]} },
-    { MODKEY|ShiftMask,         XK_y,               setlayout,      {.v = &layouts[3]} },
-    { MODKEY,                   XK_u,               setlayout,      {.v = &layouts[4]} },
-    { MODKEY|ShiftMask,         XK_u,               setlayout,      {.v = &layouts[5]} },
-    { MODKEY,                   XK_i,               setlayout,      {.v = &layouts[6]} },
-    { MODKEY|ShiftMask,         XK_i,               setlayout,      {.v = &layouts[7]} },
-    { MODKEY,                   XK_o,               incnmaster,     {.i = +1 } },
-    { MODKEY|ShiftMask,         XK_o,               incnmaster,     {.i = -1 } },
-    { MODKEY,                   XK_backslash,       view,           {0} },
-    { MODKEY,                   XK_a,               togglegaps,     {0} },
-    { MODKEY|ShiftMask,         XK_a,               defaultgaps,    {0} },
-    { MODKEY,                   XK_s,               togglesticky,   {0} },
-    { MODKEY,                   XK_f,               togglefullscr,  {0} },
-    { MODKEY|ShiftMask,         XK_f,               setlayout,      {.v = &layouts[8]} },
-    { MODKEY,                   XK_g,               shiftview,      { .i = -1 } },
-    { MODKEY|ShiftMask,         XK_g,               shifttag,       { .i = -1 } },
-    { MODKEY,                   XK_h,               setmfact,       {.f = -0.05} },
-    { MODKEY,                   XK_l,               setmfact,       {.f = +0.05} },
-    { MODKEY,                   XK_semicolon,       shiftview,      { .i = 1 } },
-    { MODKEY|ShiftMask,         XK_semicolon,       shifttag,       { .i = 1 } },
-    { MODKEY,                   XK_apostrophe,      togglescratch,  {.ui = 1} },
-    { MODKEY,                   XK_Return,          spawn,          {.v = termcmd } },
-    { MODKEY|ShiftMask,         XK_Return,          togglescratch,  {.ui = 0} },
-	{ MODKEY|ShiftMask,         XK_w,               tabmode,        {-1} },
-    { MODKEY,                   XK_z,               incrgaps,       {.i = +3 } },
-    { MODKEY,                   XK_x,               incrgaps,       {.i = -3 } },
-    { MODKEY,                   XK_s,               spawn,          SHCMD("rofi -show window") },
-    { MODKEY,                   XK_d,               spawn,          SHCMD("rofi -show drun -display-drun "" -modi drun") },
-    { MODKEY|ControlMask,       XK_Left,            focusmon,       {.i = -1 } },
-    { MODKEY|ShiftMask,         XK_Left,            tagmon,         {.i = -1 } },
-    { MODKEY|ControlMask,       XK_Right,           focusmon,       {.i = +1 } },
-    { MODKEY|ShiftMask,         XK_Right,           tagmon,         {.i = +1 } },
-    { MODKEY,                   XK_less,            shiftview,      { .i = -1 } },
-    { MODKEY|ShiftMask,         XK_less,            shiftview,      { .i = +1 } },
-    { MODKEY,                   XK_Page_Up,         shiftview,      { .i = -1 } },
-    { MODKEY|ShiftMask,         XK_Page_Up,         shifttag,       { .i = -1 } },
-    { MODKEY,                   XK_Page_Down,       shiftview,      { .i = +1 } },
-    { MODKEY|ShiftMask,         XK_Page_Down,       shifttag,       { .i = +1 } },
-    { MODKEY,                   XK_F12,             xrdb,           {.v = NULL } },
-    { MODKEY,                   XK_space,           zoom,           {0} },
-    { MODKEY|ShiftMask,         XK_space,           togglefloating, {0} },
-    { 0,                        XF86XK_DOS,         spawn,          SHCMD("alacritty") },
-    { 0,                        XF86XK_PowerOff,    spawn,          SHCMD("sysact") },
-    { MODKEY,                   XK_n,               spawn,          SHCMD("nightmode") },
-    { 0,                        XF86XK_AudioMute,      spawn,          SHCMD("pactl set-sink-mute 0 toggle") },
-    { 0,                        XF86XK_AudioLowerVolume, spawn,        SHCMD("pactl -- set-sink-volume 0 -10%") },
-    { 0,                        XF86XK_AudioRaiseVolume, spawn,        SHCMD("pactl -- set-sink-volume 0 +10%") },
-    { 0,                        XF86XK_AudioPrev,        spawn,        SHCMD("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous") },
-    { 0,                        XF86XK_AudioPlay,        spawn,        SHCMD("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause") },
-    { 0,                        XF86XK_AudioNext,        spawn,        SHCMD("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next") },
-    { 0,                        XF86XK_MonBrightnessUp,        spawn,          SHCMD("dimmer -i") },
-    { 0,                        XF86XK_MonBrightnessDown,      spawn,          SHCMD("dimmer -d") },
+    /* modifier                 key                       function        argument */
+    STACKKEYS(MODKEY,                                     focus)
+    STACKKEYS(MODKEY|ShiftMask,                           push)
+    TAGKEYS(                    XK_1,                     0)
+    TAGKEYS(                    XK_2,                     1)
+    TAGKEYS(                    XK_3,                     2)
+    TAGKEYS(                    XK_4,                     3)
+    TAGKEYS(                    XK_5,                     4)
+    TAGKEYS(                    XK_6,                     5)
+    TAGKEYS(                    XK_7,                     6)
+    TAGKEYS(                    XK_8,                     7)
+    TAGKEYS(                    XK_9,                     8)
+    { MODKEY,                   XK_0,                     view,           {.ui = ~0} },
+    { MODKEY,                   XK_BackSpace,             spawn,          SHCMD("sysact") },
+    { MODKEY|ShiftMask,         XK_BackSpace,             spawn,          SHCMD("sysact") },
+    { MODKEY,                   XK_Tab,                   view,           {0} },
+    { MODKEY,                   XK_q,                     killclient,     {0} },
+    { MODKEY,                   XK_w,                     spawn,          SHCMD("google-chrome") },
+    { MODKEY,                   XK_r,                     spawn,          SHCMD("nautilus") },
+    { MODKEY,                   XK_t,                     setlayout,      {.v = &layouts[0]} },
+    { MODKEY|ShiftMask,         XK_t,                     setlayout,      {.v = &layouts[1]} },
+    { MODKEY,                   XK_y,                     setlayout,      {.v = &layouts[2]} },
+    { MODKEY|ShiftMask,         XK_y,                     setlayout,      {.v = &layouts[3]} },
+    { MODKEY,                   XK_u,                     setlayout,      {.v = &layouts[4]} },
+    { MODKEY|ShiftMask,         XK_u,                     setlayout,      {.v = &layouts[5]} },
+    { MODKEY,                   XK_i,                     setlayout,      {.v = &layouts[6]} },
+    { MODKEY|ShiftMask,         XK_i,                     setlayout,      {.v = &layouts[7]} },
+    { MODKEY|ShiftMask,         XK_f,                     setlayout,      {.v = &layouts[8]} },
+    { MODKEY,                   XK_o,                     incnmaster,     {.i = +1} },
+    { MODKEY|ShiftMask,         XK_o,                     incnmaster,     {.i = -1} },
+    { MODKEY,                   XK_a,                     togglegaps,     {0} },
+    { MODKEY|ShiftMask,         XK_a,                     defaultgaps,    {0} },
+    { MODKEY,                   XK_s,                     togglesticky,   {0} },
+    { MODKEY,                   XK_f,                     togglefullscr,  {0} },
+    { MODKEY,                   XK_h,                     setmfact,       {.f = -0.05} },
+    { MODKEY,                   XK_l,                     setmfact,       {.f = +0.05} },
+    { MODKEY,                   XK_apostrophe,            togglescratch,  {.ui = 1} },
+    { MODKEY,                   XK_Return,                spawn,          {.v = termcmd} },
+    { MODKEY|ShiftMask,         XK_Return,                togglescratch,  {.ui = 0} },
+    { MODKEY,                   XK_z,                     incrgaps,       {.i = +2} },
+    { MODKEY,                   XK_x,                     incrgaps,       {.i = -2} },
+    { MODKEY,                   XK_s,                     spawn,          SHCMD("rofi -show window") },
+    { MODKEY,                   XK_d,                     spawn,          SHCMD("rofi -show drun -display-drun "" -modi drun") },
+    { MODKEY|ControlMask,       XK_Left,                  focusmon,       {.i = -1} },
+    { MODKEY|ShiftMask,         XK_Left,                  tagmon,         {.i = -1} },
+    { MODKEY|ControlMask,       XK_Right,                 focusmon,       {.i = +1} },
+    { MODKEY|ShiftMask,         XK_Right,                 tagmon,         {.i = +1} },
+    { MODKEY,                   XK_space,                 zoom,           {0} },
+    { MODKEY|ShiftMask,         XK_space,                 togglefloating, {0} },
+    { 0,                        XF86XK_DOS,               spawn,          SHCMD("alacritty") },
+    { 0,                        XF86XK_PowerOff,          spawn,          SHCMD("sysact") },
+    { MODKEY,                   XK_n,                     spawn,          SHCMD("nightmode") },
+    { 0,                        XF86XK_AudioMute,         spawn,          SHCMD("pactl set-sink-mute 0 toggle") },
+    { 0,                        XF86XK_AudioLowerVolume,  spawn,          SHCMD("pactl -- set-sink-volume 0 -10%") },
+    { 0,                        XF86XK_AudioRaiseVolume,  spawn,          SHCMD("pactl -- set-sink-volume 0 +10%") },
+    { 0,                        XF86XK_AudioPrev,         spawn,          SHCMD("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous") },
+    { 0,                        XF86XK_AudioPlay,         spawn,          SHCMD("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause") },
+    { 0,                        XF86XK_AudioNext,         spawn,          SHCMD("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next") },
+    { 0,                        XF86XK_MonBrightnessUp,   spawn,          SHCMD("dimmer -i") },
+    { 0,                        XF86XK_MonBrightnessDown, spawn,          SHCMD("dimmer -d") },
 };
 
 /* button definitions */
